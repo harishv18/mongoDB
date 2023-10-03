@@ -1,0 +1,71 @@
+show dbs    // list databases
+
+use database_name   //use existed database or it will create database
+
+db.createCollection("collection_name")  // to create collection inside the database
+
+show collections // to list the collections of the database
+
+db.dropDatabase()  // to drop database 
+
+
+-------------------------------------------------insert--------------------------------------------------------------------------------------
+db.collection_name.insertOne({}) // specify the insertion details inside the {} braces
+
+db.collection_name.insertMany([{},{}]) // insert many documents in a collection we use [] array inside that we use {} braces separated by comma(,) to insert document
+
+---------------------------------------------------find-------------------------------------------------------------------------------------
+db.collection_name.find() // to display all the documents of the collection_name
+
+--------------------------------------------------------datatype----------------------------------------------------------------------------
+string--- name: "harish"
+integer--- age: 22
+double---- gpa: 8.2
+boolean ---- true / flase
+Date --- new Date()
+null --- marageDate: null
+[] --- courses:['math','chemistry'] 
+{} -- nested documents
+
+------------------------------------------------------sort-----------------------------------------------------------------------
+
+db.collection_name.find().sort({field_name: 1/-1})  //field_name in the sort parameter takes 1 or -1, 1 for sorting in ascending order and -1 for sorting in descending order. 
+
+----------------------------------------------------limit-------------------------------------------------------------------------
+
+db.collection_name.find().sort().limit(number) // limit function takes only number to limit the output to display on the screen
+
+--------------------------------------find( {query} , {projection})----------------------------------------------------------
+
+db.collection_name.find() // find function takes two parameters 
+
+1. {query}  // if  you want to find the documents by specify field ex: {name: "harish"} if the name value "harish" is present then the document is returned
+syntax  :  db.collection_name.find({query}, {})
+
+2. {projection}  // if you want to get only required field then use this parameters ex: {name:true,gpa:true} only name and gpa fields are return from all documents. syntax  :  db.collection_name.find({}, {projection})
+
+
+--------------------------------------------------update-------------------------------------------------------------------------
+
+db.collection_name.updateOne(filter, update)
+
+syntax: db.student.updateOne({name:"harish"}, {$set:{name:"harish vijayakumar}})
+filter is used to select the document and update is to update that selected document with help of $set
+
+we have $unset to remove the field from selected document by giving the help as empty string("")
+db.student.updateOne({name:"pachu"}, {$unset: {age:""}) 
+
+
+updateMany
+
+db.student.updateMany({gf:{$exists:false}}, {$set:{gf:true}})
+
+
+---------------------------------------------------------------delete-------------------------------------------------------------------------
+
+
+
+
+
+
+
