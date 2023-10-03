@@ -5,6 +5,7 @@ use database_name   //use existed database or it will create database
 db.createCollection("collection_name")  // to create collection inside the database
 
 show collections // to list the collections of the database
+db.collection_name.drop() // to drop the collections
 
 db.dropDatabase()  // to drop database 
 
@@ -64,8 +65,52 @@ db.student.updateMany({gf:{$exists:false}}, {$set:{gf:true}})
 ---------------------------------------------------------------delete-------------------------------------------------------------------------
 
 
+db.collection_name.deleteOne({filter})   // pass a field name to delete
+
+db.collection_name.deleteMany({filter})  // to delete many documents
+
+
+--------------------------------------------------------------comparison query operators------------------------------------------------------
+$
+comparison operators return data based on value comparisons
+
+db.collection_name.find({name: {$ne:"dhanu"}})  // $ne (not equal)
+
+db.collection_name.find({age: {$lt:50}})  // $lt (less than)    $lte (less than equal to)     $gt (greater than)   $gte  (greater than equals to)  
+
+db.student.find({age: {$gt:20, $lt:50}})
+
+in -- operator
+nin (not in) -- operator
+db.student.find({name: {$nin: ["harish", "pachu","dhanu"]}})
 
 
 
+---------------------------------------------------------------------logical query operators--------------------------------------------------------------
+
+logical operators return data based on expressions that evaluate to true or false
+
+$and $not $nor $or
+
+$and ----- joins query clauses with a logical AND returns all documents that match the conditions of both clauses.
+db.student.find({$and: [{gf:true}, {gpa:{$gte:8}}]})
+
+$not ---- inverts the effect of a query expression and returns documents that do not match the query expression.
+
+$nor ---- joins query clauses with a logical NOR returns all documents that fail to match both clauses
+db.student.find({$nor: [{gf:true}, {gpa:{$lt:8}}]})
+
+$or --- joins query clauses with a logical OR returns all documents that match the conditions of either clause.
+db.student.find({$or: [{gf:true}, {gpa:{$gte:8}}]})
+
+--------------------------------------------------------------------------indexes-----------------------------------------------------------------------------
+
+indexes support the efficient execution of queries in mongodb. without indexes, mongodb must perform a collection scan, ie scan every document in a collection, to select those documents that match the query statement. if an appropriate index exists for a query, mongodb can use the index to limit the number of documents it mush inspect.
+
+db.student.find({name:"dhanu"}).explain("executionStats")
 
 
+ db.student.createIndex({name: 1})
+db.student.find({name:"dhanu"}).explain("executionStats")
+
+ db.student.getIndexes()
